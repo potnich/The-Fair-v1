@@ -979,7 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6447837b160394ab5854c7e5ba8c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  _moveSpeed: 5
+  _moveSpeed: 6
 --- !u!114 &1403607939
 MonoBehaviour:
   m_ObjectHideFlags: 0
