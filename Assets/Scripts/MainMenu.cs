@@ -12,6 +12,10 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Выход из игры");
 
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 }
