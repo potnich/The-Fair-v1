@@ -1,34 +1,43 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SceneFadeIn : MonoBehaviour
 {
-    [SerializeField] private UnityEngine.UI.Image _fadeImage;
-    [SerializeField] private float _fadeDuration = 1f;
+    [SerializeField] private Image _fadeImage;
+    [SerializeField] private float _fadeDuration = 2f;
     
     void Start()
     {
         if (_fadeImage != null)
         {
-            StartCoroutine(FadeIn());
+            _fadeImage.gameObject.SetActive(true);
+            StartCoroutine(FadeInCoroutine());
+        }
+        else
+        {
+            Debug.LogError("FadeImage не назначен!");
         }
     }
     
-    private IEnumerator FadeIn()
+    IEnumerator FadeInCoroutine()
     {
-        float elapsedTime = 0;
         Color color = _fadeImage.color;
-        color.a = 1;
+        color.a = 1f;
         _fadeImage.color = color;
+        
+        float elapsedTime = 0f;
         
         while (elapsedTime < _fadeDuration)
         {
             elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Lerp(1, 0, elapsedTime / _fadeDuration);
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / _fadeDuration);
             _fadeImage.color = new Color(color.r, color.g, color.b, alpha);
             yield return null;
         }
         
         _fadeImage.gameObject.SetActive(false);
+        
+        Debug.Log($"Fade закончился. Длительность была: {_fadeDuration} секунд"); // ← отладка
     }
 }
