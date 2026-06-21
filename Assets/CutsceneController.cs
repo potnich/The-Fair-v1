@@ -3,59 +3,62 @@ using System.Collections;
 
 public class CutsceneController : MonoBehaviour
 {
-    [SerializeField] private GameObject _cutscenePanel;
+    [SerializeField] private GameObject _cutscenePanel;   // панель диалога
     [SerializeField] private MonoBehaviour _playerMovement;
     [SerializeField] private float _runDistance = 3f;
     [SerializeField] private float _runSpeed = 2f;
-    [SerializeField] private bool _runRight = true; // true = бежит и смотрит направо
+    [SerializeField] private bool _runRight = true;
     
     private Rigidbody2D _playerRb;
     private Animator _animator;
-    private Vector3 _originalScale;
     private SpriteRenderer _spriteRenderer;
+    private Vector3 _originalScale;
     
     void Start()
     {
+        // Получаем компоненты с Player
         _playerRb = _playerMovement.GetComponent<Rigidbody2D>();
         _animator = _playerMovement.GetComponent<Animator>();
         _spriteRenderer = _playerMovement.GetComponent<SpriteRenderer>();
-        _originalScale = _playerMovement.transform.localScale; // запоминаем размер (чтобы не увеличивался)
+        _originalScale = _playerMovement.transform.localScale;
         
         // Отключаем управление игроком
         _playerMovement.enabled = false;
-        _cutscenePanel.SetActive(false);
         
+        // ПРОВЕРКА: принудительно включаем диалог, чтобы убедиться, что он работает
+        if (_cutscenePanel != null)
+        {
+            _cutscenePanel.SetActive(true);
+            Debug.Log("Диалог принудительно включен в Start()!");
+        }
+        else
+        {
+            Debug.LogError("Cutscene Panel не назначен в инспекторе!");
+        }
+        
+        // Запускаем катсцену
         StartCoroutine(PlayCutscene());
     }
     
     IEnumerator PlayCutscene()
     {
-        // ==========================================
-        // 1. ПРИНУДИТЕЛЬНЫЙ ПОВОРОТ (смотрим направо)
-        // ==========================================
+        // Поворот персонажа
         if (_runRight)
         {
-            // Бежим направо → Отражаем спрайт, чтобы смотрел направо
             if (_spriteRenderer != null)
-                _spriteRenderer.flipX = true;
-            
+                _spriteRenderer.flipX = false;
             _playerMovement.transform.localScale = new Vector3(Mathf.Abs(_originalScale.x), _originalScale.y, _originalScale.z);
-            _playerMovement.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
-            // Бежим налево → Не отражаем (смотрит налево)
             if (_spriteRenderer != null)
-                _spriteRenderer.flipX = false;
-            
+                _spriteRenderer.flipX = true;
             _playerMovement.transform.localScale = new Vector3(-Mathf.Abs(_originalScale.x), _originalScale.y, _originalScale.z);
-            _playerMovement.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         
-        // 2. Включаем анимацию бега
+        // Бег
         _animator.SetFloat("Speed", 1f);
         
-        // 3. Бежим
         Vector2 direction = _runRight ? Vector2.right : Vector2.left;
         float distanceTraveled = 0;
         
@@ -67,26 +70,38 @@ public class CutsceneController : MonoBehaviour
             yield return null;
         }
         
-        // 4. Останавливаемся
+        // Останавливаемся
         _animator.SetFloat("Speed", 0f);
         _playerRb.linearVelocity = Vector2.zero;
         
-        // 5. Показываем диалог
-        _cutscenePanel.SetActive(true);
+        // Ждём 1 секунду
+        yield return new WaitForSeconds(1f);
         
-        float timer = 0;
-        while (timer < 2f)
+        // ВКЛЮЧАЕМ ДИАЛОГ
+        Debug.Log("Включаем диалог!");
+        if (_cutscenePanel != null)
         {
-            timer += Time.deltaTime;
-            yield return null;
+            _cutscenePanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Cutscene Panel потерян!");
         }
         
-        _cutscenePanel.SetActive(false);
+        // Ждём 3 секунды
+        yield return new WaitForSeconds(3f);
         
-        // 6. Включаем управление обратно (теперь игрок сам повернет, куда захочет)
+        // ВЫКЛЮЧАЕМ ДИАЛОГ
+        Debug.Log("Выключаем диалог!");
+        if (_cutscenePanel != null)
+        {
+            _cutscenePanel.SetActive(false);
+        }
+        
+        // Возвращаем управление
         _playerMovement.enabled = true;
         
-        // 7. Удаляем скрипт катсцены, чтобы он не мешал
+        // Удаляем скрипт
         Destroy(gameObject);
     }
 }
