@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    [SerializeField] private float _scrollSpeed = 2f;
+    [SerializeField] public float _scrollSpeed = 2f;
     [SerializeField] private Transform _background1;
     [SerializeField] private Transform _background2;
     

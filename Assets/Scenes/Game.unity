@@ -1037,6 +1037,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &712781644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 712781646}
+  - component: {fileID: 712781645}
+  m_Layer: 0
+  m_Name: BusStopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &712781645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712781644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c751a4e4e7a6ce47ad53b521f17a043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BusStop
+  _timeBeforeStop: 5
+  _stopDuration: 3
+  _parallax: {fileID: 861971571}
+  _backgroundSprite: {fileID: 1934809669}
+  _closedDoors: {fileID: -5674926478526640192, guid: 8599b17438ed2a9469783184c4788883, type: 3}
+  _slightlyOpen: {fileID: 4584707988189980578, guid: 1b8780452b193fa4eaaea6c826e15c12, type: 3}
+  _halfOpen: {fileID: -9029066043309559104, guid: 36ab7a88847d42d409677d812a40fb95, type: 3}
+  _fullyOpen: {fileID: -5419823373273055180, guid: ff9bfa4b30e6bab46869af3e930244e1, type: 3}
+  _notificationPanel: {fileID: 0}
+  _notificationText: {fileID: 0}
+  _manualScale: {x: 1, y: 1, z: 1}
+  _manualRotation: {x: -1.72863, y: -0.2026501, z: 0}
+--- !u!4 &712781646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712781644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.72258, y: 3.4742, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &851862454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,3 +3047,4 @@ SceneRoots:
   - {fileID: 315857583}
   - {fileID: 200815290}
   - {fileID: 11238315}
+  - {fileID: 712781646}
